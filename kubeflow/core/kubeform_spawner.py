@@ -122,25 +122,25 @@ volume_mounts = []
 # Using persistent storage requires a default storage class.
 # TODO(jlewi): Verify this works on minikube.
 # see https://github.com/kubeflow/kubeflow/pull/22#issuecomment-350500944
-    c.KubeSpawner.user_storage_pvc_ensure = True
-    # How much disk space do we want?
-    c.KubeSpawner.user_storage_capacity = '10Gi'
-    c.KubeSpawner.pvc_name_template = 'claim-{username}{servername}'
-    c.KubeSpawner.volumes = [
-        {
-            'name': 'volume-{username}{servername}',
-            'persistentVolumeClaim': {
-                'claimName': 'claim-{username}{servername}'
-            }
+c.KubeSpawner.user_storage_pvc_ensure = True
+# How much disk space do we want?
+c.KubeSpawner.user_storage_capacity = '10Gi'
+c.KubeSpawner.pvc_name_template = 'claim-{username}{servername}'
+c.KubeSpawner.volumes = [
+    {
+        'name': 'volume-{username}{servername}',
+        'persistentVolumeClaim': {
+            'claimName': 'claim-{username}{servername}'
         }
-    ]
-    c.KubeSpawner.volume_mounts = [
-        {
-            # This should point to homedir of the user in the image
-            'mountPath': '/home/jovyan',
-            'name': 'volume-{username}{servername}'
-        }
-    ]
+    }
+]
+c.KubeSpawner.volume_mounts = [
+    {
+        # This should point to homedir of the user in the image
+        'mountPath': '/home/jovyan',
+        'name': 'volume-{username}{servername}'
+    }
+]
 
 # ###################################################
 # ### Extra volumes for NVIDIA drivers (Azure)
