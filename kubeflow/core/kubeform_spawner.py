@@ -123,25 +123,25 @@ volume_mounts = []
 # TODO(jlewi): Verify this works on minikube.
 # see https://github.com/kubeflow/kubeflow/pull/22#issuecomment-350500944
 pvc_mount = os.environ.get('NOTEBOOK_PVC_MOUNT')
-if pvc_mount and pvc_mount != 'null':
-    c.KubeSpawner.user_storage_pvc_ensure = True
-    # How much disk space do we want?
-    c.KubeSpawner.user_storage_capacity = '10Gi'
-    c.KubeSpawner.pvc_name_template = 'claim-{username}{servername}'
-    volumes.append(
-        {
-            'name': 'volume-{username}{servername}',
-            'persistentVolumeClaim': {
-                'claimName': 'claim-{username}{servername}'
-            }
+
+c.KubeSpawner.user_storage_pvc_ensure = True
+# How much disk space do we want?
+c.KubeSpawner.user_storage_capacity = '10Gi'
+c.KubeSpawner.pvc_name_template = 'claim-{username}{servername}'
+volumes.append(
+    {
+        'name': 'volume-{username}{servername}',
+        'persistentVolumeClaim': {
+            'claimName': 'claim-{username}{servername}'
         }
-    )
-    volume_mounts.append(
-        {
-            'mountPath': pvc_mount,
-            'name': 'volume-{username}{servername}'
-        }
-    )
+    }
+)
+volume_mounts.append(
+    {
+        'mountPath': pvc_mount,
+        'name': 'volume-{username}{servername}'
+    }
+)
 
 # ###################################################
 # ### Extra volumes for NVIDIA drivers (Azure)
