@@ -124,7 +124,7 @@ volume_mounts = []
 # see https://github.com/kubeflow/kubeflow/pull/22#issuecomment-350500944
 c.KubeSpawner.user_storage_pvc_ensure = True
 # How much disk space do we want?
-c.KubeSpawner.user_storage_capacity = '10Gi'
+c.KubeSpawner.user_storage_capacity = '5Gi'
 c.KubeSpawner.pvc_name_template = 'claim-{username}{servername}'
 c.KubeSpawner.volumes = [
     {
@@ -137,7 +137,7 @@ c.KubeSpawner.volumes = [
 c.KubeSpawner.volume_mounts = [
     {
         # This should point to homedir of the user in the image
-        'mountPath': '/home/jovyan',
+        'mountPath': '/home/{username}',
         'name': 'volume-{username}{servername}'
     }
 ]
